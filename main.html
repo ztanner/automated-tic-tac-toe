@@ -1,0 +1,21 @@
+<html>
+<body id="board">
+</body>
+<script src="player.js"></script>
+<script src="game.js"></script>
+<script type="text/javascript">
+
+var player1 = new Player("X");
+var player2 = new Player("O");
+var currentTime = new Date();
+while(player1.wins < 10 && player2.wins < 10) {
+	var game = new Game();
+	while(!game.winner) {
+		game.currentPlayer.move(game);
+	}
+}
+document.getElementById('board').innerHTML += "<p> Finished in " + Math.abs(currentTime - new Date()) + " milliseconds";
+console.log("Finished in " + Math.abs(currentTime - new Date()) + " milliseconds");
+
+</script>
+</html>
