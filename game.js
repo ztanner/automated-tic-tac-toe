@@ -19,12 +19,7 @@ Game.prototype.fetchEmpty = function() {
 				emptySpots.push([i,j])
 		}
 	}
-	if(emptySpots.length === 0) {
-		this.announceWinner("DRAW");
-	}
-	else {
-		return emptySpots;
-	}
+	return emptySpots;
 }
 Game.prototype.readSpace = function(coords) {
 	return this.board[coords[0]][coords[1]];
@@ -52,7 +47,7 @@ Game.prototype.checkWinner = function(coords) {
 	var y = coords[1];
 	//x,0 ; x, 1; x, 2
 
-	if(this.board[x][0] === this.board[x][1] && this.board[x][0] === this.board[x][2]) {
+	if(this.board[x][0] === this.board[x][1] && this.board[x][0] === this.board[x][2] && this.board[x][0]) {
 		winner = this.board[x][0];
 	}
 
@@ -62,15 +57,18 @@ Game.prototype.checkWinner = function(coords) {
 	}
 
 	//0,0; 1,1; 2,2;
-	else if(x === y && this.board[0][0] === this.board[1][1] && this.board[0][0] === this.board[2][2]) {
+	else if(x === y && this.board[0][0] === this.board[1][1] && this.board[0][0] === this.board[2][2] && this.board[0][0]) {
 		winner = this.board[0][0];
 	}
 
 	//0,2; 1,1; 2,0
 	else if((x === y && x === 1) || Math.abs(x - y) === 2) {
-		if( this.board[0][2] === this.board[1][2] && this.board[0][2] === this.board[2][0]) {
+		if( this.board[0][2] === this.board[1][1] && this.board[0][2] === this.board[2][0] && this.board[0][2]) {
 			winner = this.board[0][2];
 		}
+	}
+	if(!winner && this.fetchEmpty().length === 0) {
+		return "DRAW";
 	}
 	return winner;
 }
@@ -84,11 +82,11 @@ Game.prototype.printBoard = function() {
 	document.getElementById('board').innerHTML += "<br />";
 }
 Game.prototype.announceWinner = function(winner) {
-	if(winner != "DRAW") {
+	if(winner && winner != "DRAW") {
 		winner.wins += 1;
 		console.log(winner.symbol + " HAS WON");
 		document.getElementById('board').innerHTML += "<p><strong>"+winner.symbol + " HAS WON:</strong></p>";
-	} else {
+	} else if (winner == "DRAW") {
 		console.log("DRAW");
 		document.getElementById('board').innerHTML += "<p><strong>DRAW:</strong></p>";
 	}
