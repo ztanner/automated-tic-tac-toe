@@ -52,7 +52,7 @@ Game.prototype.checkWinner = function(coords) {
 	}
 
 	//0,y; 1,y; 2,y
-	else if(this.board[0][y] === this.board[1][y] && this.board[0][y] === this.board[2][y]) {
+	else if(this.board[0][y] === this.board[1][y] && this.board[0][y] === this.board[2][y] && this.board[2][y]) {
 		winner = this.board[0][y];
 	}
 
